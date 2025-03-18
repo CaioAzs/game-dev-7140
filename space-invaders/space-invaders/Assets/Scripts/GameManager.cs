@@ -49,8 +49,7 @@ public class GameManager : MonoBehaviour
 
             if (lives <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reinicia o jogo
-                //Redirecionar para a cena de Derrota
+                SceneManager.LoadScene(2); //Redireciona para a cena de Derrota
             }
             else
             {

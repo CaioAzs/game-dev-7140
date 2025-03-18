@@ -8,6 +8,7 @@ public class Invader : MonoBehaviour
     public float animationTime = 1.0f;
 
     public System.Action killed;
+    public int points = 100;
 
     private SpriteRenderer _spriteRenderer;
     private int _animationFrame;
@@ -33,6 +34,7 @@ public class Invader : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Laser")){
+            GameManager.Instance.AddPoints(points);
             this.killed.Invoke();
             this.gameObject.SetActive(false);
         }

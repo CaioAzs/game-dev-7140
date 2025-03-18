@@ -87,6 +87,7 @@ public class Invaders : MonoBehaviour
 
         if(this.amountKilled >= this.totalInvaders) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //Redirecionar para a cena de vitória;
         }
     }
 }

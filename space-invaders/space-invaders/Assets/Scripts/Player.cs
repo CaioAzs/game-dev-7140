@@ -9,14 +9,35 @@ public class Player : MonoBehaviour
 
     private bool _laserActive;
 
+    private float _minX, _maxX;
+
+    private void Start()
+    {
+        // Define os limites baseado no tamanho da tela
+        float halfWidth = GetComponent<SpriteRenderer>().bounds.extents.x; 
+        _minX = Camera.main.ViewportToWorldPoint(Vector3.zero).x + halfWidth;
+        _maxX = Camera.main.ViewportToWorldPoint(Vector3.one).x - halfWidth;
+    }
+
     private void Update(){
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-            this.transform.position += Vector3.left * this.speed * Time.deltaTime;
-        } else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
-            this.transform.position += Vector3.right * this.speed * Time.deltaTime;
+        float move = 0;
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            move = -speed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            move = speed * Time.deltaTime;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)){
+        // Move o jogador e restringe sua posição
+        Vector3 newPosition = transform.position + Vector3.right * move;
+        newPosition.x = Mathf.Clamp(newPosition.x, _minX, _maxX);
+        transform.position = newPosition;
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
             Shoot();
         }
     }
@@ -35,9 +56,8 @@ public class Player : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if (other.gameObject.layer == LayerMask.NameToLayer("Invader") ||
-            other.gameObject.layer == LayerMask.NameToLayer("Missile")){
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Invader") || other.gameObject.layer == LayerMask.NameToLayer("Missile")){
+            GameManager.Instance.LoseLife();
+        }
     }
 }

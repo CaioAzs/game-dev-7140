@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-    [SerializeField] private float bulletLifetime = 5f; // Tempo maior para testar
+    [SerializeField] private float bulletLifetime = 5f; 
 
     private void Start() {
         Destroy(gameObject, bulletLifetime);

@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
   [Header("Ship parameters")]
-  [SerializeField] private float shipAcceleration = 10f;
-  [SerializeField] private float shipMaxVelocity = 10f;
-  [SerializeField] private float shipRotationSpeed = 180f;
+  [SerializeField] private float shipSpeed = 10f; // Velocidade do movimento lateral e vertical
   [SerializeField] private float bulletSpeed = 8f;
 
   [Header("Object references")]
@@ -15,52 +14,55 @@ public class Player : MonoBehaviour {
 
   private Rigidbody2D shipRigidbody;
   private bool isAlive = true;
-  private bool isAccelerating = false;
 
-  private void Start() {
+  private void Start()
+  {
     shipRigidbody = GetComponent<Rigidbody2D>();
   }
 
-  private void Update() {
-    if (isAlive) {
-      HandleShipAcceleration();
-      HandleShipRotation();
+  private void Update()
+  {
+    if (isAlive)
+    {
+      HandleShipMovement();
       HandleShooting();
     }
   }
 
-  private void FixedUpdate() {
-    if (isAlive && isAccelerating) {
-      shipRigidbody.AddForce(shipAcceleration * transform.up);
-      shipRigidbody.linearVelocity = Vector2.ClampMagnitude(shipRigidbody.linearVelocity, shipMaxVelocity);
-    }
+  private void HandleShipMovement()
+  {
+    float horizontalInput = Input.GetAxis("Horizontal");
+    float verticalInput = Input.GetAxis("Vertical");
+
+    Vector2 movement = new Vector2(horizontalInput, verticalInput) * shipSpeed * Time.deltaTime;
+
+    shipRigidbody.MovePosition(shipRigidbody.position + movement);
   }
 
-  private void HandleShipAcceleration() {
-    isAccelerating = Input.GetKey(KeyCode.W);
-  }
-
-  private void HandleShipRotation() {
-    if (Input.GetKey(KeyCode.A)) {
-      transform.Rotate(shipRotationSpeed * Time.deltaTime * Vector3.forward);
-    } else if (Input.GetKey(KeyCode.D)) {
-      transform.Rotate(-shipRotationSpeed * Time.deltaTime * Vector3.forward);
-    }
-  }
-
-  private void HandleShooting() {
-    if (Input.GetKeyDown(KeyCode.Space)) {
+  private void HandleShooting()
+  {
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
       Rigidbody2D bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-      Vector2 shipVelocity = shipRigidbody.linearVelocity;
-      Vector2 shipDirection = transform.up;
-      float shipForwardSpeed = Vector2.Dot(shipVelocity, shipDirection);
 
-      if (shipForwardSpeed < 0) { 
-        shipForwardSpeed = 0; 
-      }
+      Vector2 bulletDirection = transform.up;
 
-      bullet.linearVelocity = shipDirection * shipForwardSpeed;
-      bullet.AddForce(bulletSpeed * shipDirection, ForceMode2D.Impulse);
+      bullet.linearVelocity = bulletDirection * bulletSpeed;
+    }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.CompareTag("Asteroid"))
+    {
+      isAlive = false;
+
+      GameManager gameManager = FindObjectOfType<GameManager>();
+      gameManager.GameOver();
+
+      Instantiate(destroyedParticles, transform.position, Quaternion.identity);
+
+      Destroy(gameObject);
     }
   }
 }

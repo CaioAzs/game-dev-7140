@@ -7,7 +7,7 @@ public class Asteroid : MonoBehaviour {
   private void Start() {
 
     Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    float spawnSpeed = Random.Range(3f, 5f);
+    float spawnSpeed = Random.Range(3f, 5f) * gameManager.asteroidSpeedMultiplier; 
     rb.linearVelocity = new Vector2(Random.Range(-1f, 1f), -1f).normalized * spawnSpeed; 
 
     gameManager.asteroidCount++;
@@ -21,15 +21,15 @@ public class Asteroid : MonoBehaviour {
 
   private void OnTriggerEnter2D(Collider2D collision) {
     if (collision.CompareTag("Bullet")) {
-      gameManager.asteroidCount--;
-
-      Destroy(collision.gameObject);
-
-      Instantiate(destroyedAnimationPrefab, transform.position, Quaternion.identity); 
-
-      Destroy(gameObject);
-
-      gameManager.AddScore(100);
+        gameManager.asteroidCount--;
+        Destroy(collision.gameObject);
+        Instantiate(destroyedAnimationPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+        gameManager.AddScore(100);
+    } 
+    else if (collision.CompareTag("BaseInferior")) { // Se tocar na base
+        gameManager.SubtractScore(200); // Remove pontos
+        Destroy(gameObject); // Remove o asteroide
     }
   }
 }

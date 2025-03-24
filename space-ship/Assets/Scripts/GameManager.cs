@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour {
 
   [Header("UI References")]
   [SerializeField] private TextMeshProUGUI scoreText; 
+  public float asteroidSpeedMultiplier = 1f; 
+  private int nextSlowdownScore = 3000; // Começa em 1000 e aumenta a cada ativação
+
+
   private void Start() {
     StartCoroutine(SpawnAsteroidAtInterval());
     UpdateScoreText(); 
@@ -50,6 +54,13 @@ public class GameManager : MonoBehaviour {
     score += points;
     UpdateScoreText(); 
 
+    if (score >= nextSlowdownScore) {
+        asteroidSpeedMultiplier = 0.5f; // Reduz a velocidade dos asteroides
+        nextSlowdownScore += 3000; // Atualiza para o próximo gatilho (2000, 4000, etc.)
+        StartCoroutine(ResetAsteroidSpeed()); // Restaura a velocidade após 5s
+    }
+  }
+
   private void UpdateScoreText() {
     scoreText.text = "Score: " + score;
   }
@@ -57,6 +68,11 @@ public class GameManager : MonoBehaviour {
   public void GameOver() {
     StartCoroutine(Restart());
   }
+
+  private IEnumerator ResetAsteroidSpeed() {
+    yield return new WaitForSeconds(5f);
+    asteroidSpeedMultiplier = 1f; // Volta à velocidade normal
+  } 
 
   private IEnumerator Restart() {
     Debug.Log("Game Over");
@@ -68,4 +84,19 @@ public class GameManager : MonoBehaviour {
 
     yield return null;
   }
-}}
+
+  public void SubtractScore(int points) {
+    score -= points;
+
+    if (score <= 0) {
+        RestartedByScore(); // Reinicia o jogo imediatamente
+    } else {
+        UpdateScoreText(); // Só atualiza se o jogador ainda estiver no jogo
+    }
+  }
+
+  public void RestartedByScore(){
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+  }
+
+}

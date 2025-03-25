@@ -4,8 +4,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   [Header("Ship parameters")]
-  [SerializeField] private float shipSpeed = 10f; // Velocidade do movimento lateral e vertical
-  [SerializeField] private float bulletSpeed = 8f;
+  [SerializeField] private float shipSpeed = 5f; // Velocidade do movimento lateral e vertical
+  [SerializeField] private float bulletSpeed = 5f;
 
   [Header("Object references")]
   [SerializeField] private Transform bulletSpawn;

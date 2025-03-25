@@ -2,23 +2,21 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-
-    private float lenght;
+    private float height; 
     public float parallaxEffect;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-  
-   void Start()
-   {
-       lenght = GetComponent<SpriteRenderer>().bounds.size.x;
-   }
 
-
-    // Update is called once per frame
-void Update(){
-    transform.position += Vector3.left * Time.deltaTime * parallaxEffect;
-    if(transform.position.x < -lenght ) {
-        transform.position = new Vector3(lenght, transform.position.y, transform.position.z);
+    void Start()
+    {
+        height = GetComponent<SpriteRenderer>().bounds.size.y; 
     }
-}
 
+    void Update()
+    {
+        transform.position += Vector3.down * Time.deltaTime * parallaxEffect; 
+
+        if (transform.position.y < -height)
+        {
+            transform.position = new Vector3(transform.position.x, height, transform.position.z);
+        }
+    }
 }

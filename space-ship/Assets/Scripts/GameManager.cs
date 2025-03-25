@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 
   public void GameOver()
   {
-    StartCoroutine(Restart());
+    SceneManager.LoadScene(2);
   }
 
   private IEnumerator ResetAsteroidSpeed()

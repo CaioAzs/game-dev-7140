@@ -11,6 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Fase2.unity
     guid: 1b6f82d7442907941be92394c3bbd151
+  - enabled: 1
+    path: Assets/Scenes/Game Over.unity
+    guid: d4834feb352a2584fbfc771828dcf4ac
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: 88c34e5dd4c5deb45849dc765fd6d8b4
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 4a0c206988ad3df42bf3943e8b273e84
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

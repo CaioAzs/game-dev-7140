@@ -94,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void RestartGame(){
-        SceneManager.LoadScene("Fase1");
+        GameManager.Instance.ResetScores();
+        //SceneManager.LoadScene("Fase1");
+        //Implementar a Cena de Derrota!!!!!!!!!!!!!!!!!!!
     }
 }

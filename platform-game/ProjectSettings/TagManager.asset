@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Moeda
   - Bandeira
+  - ScoreMoeda
+  - Score
+  - ScoreMushroom
   layers:
   - Default
   - TransparentFX

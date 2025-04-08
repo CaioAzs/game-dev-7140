@@ -35,6 +35,7 @@ public class Mushroom : MonoBehaviour
 
         if(collision.CompareTag("Player")){
             PlayerMovement.isGrow = true;
+            GameManager.Instance.AddScoreMushroom(1);
             Destroy(gameObject);
         }
     }

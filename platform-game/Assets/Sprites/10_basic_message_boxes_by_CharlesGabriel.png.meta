@@ -143,6 +143,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: DialogueBlack
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 361
+        width: 317
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb4bc3805dc49934f9ed14d69b2b49ab
+      internalID: 665521988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -159,6 +181,7 @@ TextureImporter:
     nameFileIdTable:
       10_basic_message_boxes_by_CharlesGabriel_0: -667228130818228280
       Dialogue: -1547795782
+      DialogueBlack: 665521988
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
